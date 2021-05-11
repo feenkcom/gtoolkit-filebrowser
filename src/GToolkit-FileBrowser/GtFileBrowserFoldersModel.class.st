@@ -225,8 +225,8 @@ GtFileBrowserFoldersModel >> notifyFileBrowserFolderModelRemoved: aFileBrowserFo
 { #category : #'api - adding' }
 GtFileBrowserFoldersModel >> onFileBrowserFolderModelAdded: aFileBrowserFolderModel [
 	"Is sent after a given child object was added to the receiver"
-
 	<generatedFrom: #'TGtRobocoderMetamodelAdditionForManyTemplate>>#objectAddedHookTemplate'>
+	aFileBrowserFolderModel parentFileBrowserFoldersModel: self.
 	self notifyFileBrowserFolderModelAdded: aFileBrowserFolderModel.
 ]
 

@@ -66,13 +66,9 @@ GtFileBrowserFolderTreeContentElement >> subscribeToFileBrowserFolderViewModel [
 	<modelSubscriber: #folder>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
 	
-	self fileBrowserFolderViewModel fileBrowserFoldersViewModel
-		when: GtFileBrowserFolderViewModelAddedAnnouncement, GtFileBrowserFolderViewModelRemovedAnnouncement
-		send: #onContentChanged
-		to: self.
-
-	self fileBrowserFolderViewModel fileBrowserFilesViewModel
-		when: GtFileBrowserFileViewModelAddedAnnouncement, GtFileBrowserFileViewModelRemovedAnnouncement
+	self fileBrowserFolderViewModel
+		when: GtFileBrowserFolderViewModelAddedAnnouncement, GtFileBrowserFolderViewModelRemovedAnnouncement,
+			GtFileBrowserFileViewModelAddedAnnouncement, GtFileBrowserFileViewModelRemovedAnnouncement
 		send: #onContentChanged
 		to: self
 ]
@@ -84,6 +80,5 @@ GtFileBrowserFolderTreeContentElement >> unsubscribeFromFileBrowserFolderViewMod
 	<modelUnsubscriber: #folder>
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#unsubscribeFromObjectTemplate'>
 	
-	self fileBrowserFolderViewModel fileBrowserFoldersViewModel unsubscribe: self.
-	self fileBrowserFolderViewModel fileBrowserFilesViewModel unsubscribe: self
+	self fileBrowserFolderViewModel unsubscribe: self
 ]
