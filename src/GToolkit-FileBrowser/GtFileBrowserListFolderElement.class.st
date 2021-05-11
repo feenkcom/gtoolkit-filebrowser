@@ -43,13 +43,13 @@ GtFileBrowserListFolderElement >> initialize [
 		(BrGlamorousWithContextMenuAptitude
 			content: [ BrGlamorousSimpleContextMenuContent new
 				items: {('Delete' -> [ :anEvent | self fileBrowserFolderViewModel fileBrowserFolderModel deleteFolder ])} ]).
-	
+
 	self
 		when: BlClickEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
 			anEvent currentTarget fileBrowserFolderViewModel selectFolderWithoutOtherEntities ].
-	
+
 	self
 		when: BlDoubleClickEvent
 		do: [ :anEvent | 
