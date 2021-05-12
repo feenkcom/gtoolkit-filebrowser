@@ -28,17 +28,59 @@ GtFileBrowserFolderTreeContentElement >> initialize [
 
 	self matchParent.
 
-	tree := BrSimpleTree new.
-	tree withoutSelection.
+	tree := BrColumnedTree new.
 	tree nodeType: [ :aTypeFactory :eachFolderOrFileViewModel | eachFolderOrFileViewModel value objectName ].
-	tree nodeStencil: [ :anItemType |
-		anItemType = #folder
-			ifTrue: [ GtFileBrowserListFolderElement new ]
-			ifFalse: [ GtFileBrowserListFileElement new ] ].
-	tree nodeDataBinder: [ :eachElement :eachFolderOrFileViewModel |
-		eachFolderOrFileViewModel value objectName = #folder
-			ifTrue: [ eachElement fileBrowserFolderViewModel: eachFolderOrFileViewModel value ]
-			ifFalse: [ eachElement fileBrowserFileViewModel: eachFolderOrFileViewModel value ] ].
+
+	tree column
+		title: 'Name';
+		cellStencil: [ :anItemType |
+			anItemType = #folder
+				ifTrue: [ GtFileBrowserListFolderElement new ]
+				ifFalse: [ GtFileBrowserListFileElement new ] ];
+		dataBinder: [ :eachElement :eachFolderOrFileViewModel |
+			eachFolderOrFileViewModel value isFileBrowserFolderViewModel
+				ifTrue: [ eachElement fileBrowserFolderViewModel: eachFolderOrFileViewModel value ]
+				ifFalse: [ eachElement fileBrowserFileViewModel: eachFolderOrFileViewModel value ] ].
+			
+	tree column
+		title: 'Size';
+		cellStencil: [ :anItemType |
+			BrLabel new
+				hMatchParent;
+				aptitude: (BrGlamorousLabelAptitude new foreground: Color gray) ];
+		dataBinder: [ :eachElement :eachFolderOrFileViewModel |
+			| eachSize |
+			eachSize := eachFolderOrFileViewModel value isFileBrowserFileViewModel
+				ifTrue: [
+					| eachFileReference |
+					eachFileReference := eachFolderOrFileViewModel value fileBrowserFileModel fileReference.
+					[ eachFileReference humanReadableSize asString ]
+						on: FileException, FileSystemError
+						do: [ :anException | anException return: '' ] ]
+				ifFalse: [ '' ].			
+			eachElement text: eachSize ].
+		
+	tree column
+		title: 'Creation';
+		cellStencil: [ :anItemType |
+			BrLabel new
+				hMatchParent;
+				aptitude: (BrGlamorousLabelAptitude new foreground: Color gray) ];
+		dataBinder: [ :eachElement :eachFolderOrFileViewModel |
+			| eachFileReference eachCreation |
+			eachFileReference := eachFolderOrFileViewModel value isFileBrowserFolderViewModel
+				ifTrue: [ eachFolderOrFileViewModel value fileBrowserFolderModel fileReference ]
+				ifFalse: [ eachFolderOrFileViewModel value fileBrowserFileModel fileReference ].
+			
+			eachCreation := [ String
+					streamContents: [ :s | 
+						eachFileReference creationTime printYMDOn: s.
+						s nextPut: Character space.
+						eachFileReference creationTime printHMSOn: s ] ]
+				on: FileException, FileSystemError
+				do: [ :anException | anException return: '' ].
+			
+			eachElement text: eachCreation ].
 
 	self addChild: tree
 ]
