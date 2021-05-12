@@ -12,7 +12,7 @@ Class {
 
 { #category : #'private - instance creation' }
 GtFileBrowserListFileElement >> createIcon [
-	^ BrGlamorousVectorIcons clipboard asElement
+	^ BrGlamorousIcons file asElement
 ]
 
 { #category : #'private - instance creation' }
@@ -29,7 +29,7 @@ GtFileBrowserListFileElement >> initialize [
 	self alignCenterLeft.
 	self hMatchParent.
 	self vFitContent.
-	self cellSpacing: 8.
+	self cellSpacing: 3.
 	self addAptitude: BrGlamorousListItemAptitude.
 	
 	icon := self createIcon.
@@ -60,7 +60,8 @@ GtFileBrowserListFileElement >> onFileBrowserFileViewModelChanged [
 	wish to perform an operation that requires an announcement, but keep in mind that this is not the most efficient way"
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#onObjectChangedTemplate'>
 	
-	label text: self fileBrowserFileViewModel fileBrowserFileModel fileReference basename
+	label text: self fileBrowserFileViewModel fileBrowserFileModel fileReference basename.
+	self updateFileSelection
 ]
 
 { #category : #'api - file browser file view model' }

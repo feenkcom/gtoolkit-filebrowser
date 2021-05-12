@@ -9,6 +9,19 @@ Class {
 	#category : #'GToolkit-FileBrowser-Views'
 }
 
+{ #category : #private }
+GtFileBrowserFolderTreeContentElement >> getContentsOfFolder: aGtFileBrowserFolderModel [
+	| theFolders theFiles |
+
+	theFolders := aGtFileBrowserFolderModel fileBrowserFoldersViewModel fileBrowserFolderViewModels asArray.
+	theFolders sort: [ :a :b | a fileBrowserFolderModel fileReference basename asLowercase < b fileBrowserFolderModel fileReference basename asLowercase ].
+
+	theFiles := aGtFileBrowserFolderModel fileBrowserFilesViewModel fileBrowserFileViewModels asArray.
+	theFiles sort: [ :a :b | a fileBrowserFileModel fileReference basename asLowercase < b fileBrowserFileModel fileReference basename asLowercase ].
+	
+	^ theFolders, theFiles
+]
+
 { #category : #initialization }
 GtFileBrowserFolderTreeContentElement >> initialize [
 	super initialize.
@@ -32,17 +45,9 @@ GtFileBrowserFolderTreeContentElement >> initialize [
 
 { #category : #'private - event handling' }
 GtFileBrowserFolderTreeContentElement >> onContentChanged [
-	| theFolders theFiles |
-	
-	theFolders := self fileBrowserFolderViewModel fileBrowserFoldersViewModel fileBrowserFolderViewModels asArray.
-	theFolders sort: [ :a :b | a fileBrowserFolderModel fileReference basename asLowercase < b fileBrowserFolderModel fileReference basename asLowercase ].
-
-	theFiles := self fileBrowserFolderViewModel fileBrowserFilesViewModel fileBrowserFileViewModels asArray.
-	theFiles sort: [ :a :b | a fileBrowserFileModel fileReference basename asLowercase < b fileBrowserFileModel fileReference basename asLowercase ].
-
-	tree items: theFolders, theFiles lazy: [ :eachNode |
+	tree items: (self getContentsOfFolder: self fileBrowserFolderViewModel) lazy: [ :eachNode |
 		eachNode value objectName = #folder
-			ifTrue: [ eachNode fileBrowserFoldersViewModel fileBrowserFolderViewModels asArray ]
+			ifTrue: [ self getContentsOfFolder: eachNode ]
 			ifFalse: [ #() ] ]
 ]
 

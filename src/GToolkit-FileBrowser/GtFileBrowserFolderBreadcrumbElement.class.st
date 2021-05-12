@@ -12,9 +12,8 @@ GtFileBrowserFolderBreadcrumbElement >> initialize [
 	
 	self aptitude: (BrGlamorousBreadcrumbAptitude new separator: [
 		BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new thin foreground: Color gray);
-			text: '>';
-			margin: (BlInsets left: 5 right: 5) ]).
+			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+			text: DiskStore delimiter ])
 ]
 
 { #category : #'api - file browser folder view model' }
@@ -28,7 +27,13 @@ GtFileBrowserFolderBreadcrumbElement >> onFileBrowserFolderViewModelChanged [
 
 	self removeAllItems.
 	self fileBrowserFolderViewModel fileBrowserFolderModel withAllParentFileBrowserFolderModel reverseDo: [ :echFolderModel |
+		| aForeground |
+		
+		aForeground := self fileBrowserFolderViewModel fileBrowserFolderModel == echFolderModel
+			ifTrue: [ Color black ]
+			ifFalse: [ Color gray ].
+		
 		self addItem: (BrLabel new
-			aptitude: BrGlamorousLabelAptitude;
+			aptitude: (BrGlamorousLabelAptitude new foreground: aForeground);
 			text: echFolderModel fileReference absolutePath basename) ]
 ]

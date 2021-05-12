@@ -31,7 +31,7 @@ GtFileBrowserListFolderElement >> initialize [
 	self alignCenterLeft.
 	self hMatchParent.
 	self vFitContent.
-	self cellSpacing: 8.
+	self cellSpacing: 3.
 	self addAptitude: BrGlamorousListItemAptitude.
 
 	icon := self createIcon.

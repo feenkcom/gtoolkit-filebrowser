@@ -33,7 +33,7 @@ GtFileBrowserFolderElement >> initialize [
 	toolbar
 		hMatchParent
 		vFitContent;
-		margin: (BlInsets bottom: 5).
+		margin: (BlInsets top: 0 left: 13 bottom: 15 right: 0).
 	content := self createFolderContent.
 	content matchParent.
 	
