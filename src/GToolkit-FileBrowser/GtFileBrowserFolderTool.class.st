@@ -8,7 +8,7 @@ Class {
 
 { #category : #'instance creation' }
 GtFileBrowserFolderTool class >> forFolder: aStringOrFileReference [
-	| aFolderFileReference aFolderModel aFolderViewModel |
+	| aFolderFileReference aFolderModel |
 	
 	aFolderFileReference := aStringOrFileReference asFileReference.
 	self
@@ -16,7 +16,15 @@ GtFileBrowserFolderTool class >> forFolder: aStringOrFileReference [
 		description: [ 'Folder tool can only be creater for a folder' ].
 	
 	aFolderModel := GtFileBrowserFolderModel new fileReference: aFolderFileReference.
-	aFolderViewModel := GtFileBrowserFolderViewModel new fileBrowserFolderModel: aFolderModel.
+	^ self forFolderModel: aFolderModel
+]
+
+{ #category : #'instance creation' }
+GtFileBrowserFolderTool class >> forFolderModel: aGtFileBrowserFolderModel [
+	| aFolderViewModel |
+	
+	aFolderViewModel := GtFileBrowserFolderViewModel new
+		fileBrowserFolderModel: aGtFileBrowserFolderModel.
 	
 	^ self new fileBrowserFolderViewModel: aFolderViewModel
 ]
@@ -28,6 +36,6 @@ GtFileBrowserFolderTool >> asElementDo: aOneArgBlock [
 	
 	aFolderElement := GtFileBrowserFolderElement new
 		fileBrowserFolderViewModel: self fileBrowserFolderViewModel.
-		
+	
 	^ aOneArgBlock cull: aFolderElement cull: self
 ]

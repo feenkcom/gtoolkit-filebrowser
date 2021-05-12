@@ -56,7 +56,7 @@ GtFileBrowserListFolderElement >> initialize [
 			anEvent consumed: true.
 			anEvent currentTarget phlow
 				spawnTool: (GtPhlowCompositeTool new
-					addTool: (GtFileBrowserFolderTool new fileBrowserFolderViewModel: self fileBrowserFolderViewModel);
+					addTool: (GtFileBrowserFolderTool forFolderModel: self fileBrowserFolderViewModel fileBrowserFolderModel);
 					addTool: (GtInspectorTool forObject: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference)) ]
 ]
 

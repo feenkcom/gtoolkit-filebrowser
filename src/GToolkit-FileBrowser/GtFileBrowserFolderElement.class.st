@@ -25,9 +25,15 @@ GtFileBrowserFolderElement >> initialize [
 	super initialize.
 	
 	self matchParent.
+	self background: Color white.
 	
+	self padding: (BlInsets all: 10).
+
 	toolbar := self createFolderToolbar. 
-	toolbar hMatchParent vFitContent.
+	toolbar
+		hMatchParent
+		vFitContent;
+		margin: (BlInsets bottom: 5).
 	content := self createFolderContent.
 	content matchParent.
 	

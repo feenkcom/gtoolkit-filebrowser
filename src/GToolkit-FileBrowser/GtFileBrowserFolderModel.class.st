@@ -13,6 +13,24 @@ Class {
 	#category : #'GToolkit-FileBrowser-Models'
 }
 
+{ #category : #'api - enumerating' }
+GtFileBrowserFolderModel >> allParentFileBrowserFolderModelDo: aBlock [
+	"Evaluate a given block with all parents of the same type as the receiver"
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#allParentObjectsDoTemplate'>
+	| aCurrentParent |
+	
+	aCurrentParent := self.
+	
+	aCurrentParent hasParentFileBrowserFoldersModel
+		ifFalse: [ ^ self ].
+	aCurrentParent := aCurrentParent parentFileBrowserFoldersModel.
+	aCurrentParent hasParentFileBrowserFolderModel
+		ifFalse: [ ^ self ].
+	aCurrentParent := aCurrentParent parentFileBrowserFolderModel.
+	aBlock value: aCurrentParent.
+	aCurrentParent allParentFileBrowserFolderModelDo: aBlock
+]
+
 { #category : #'api - announcer' }
 GtFileBrowserFolderModel >> announce: anAnnouncement [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
@@ -269,4 +287,23 @@ GtFileBrowserFolderModel >> when: anAnnouncementClass send: aSelector to: anObje
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenSendToTemplate'>
 	(announcer ifNil: [ announcer := Announcer new ]) weak
 		when: anAnnouncementClass send: aSelector to: anObject
+]
+
+{ #category : #'api - enumerating' }
+GtFileBrowserFolderModel >> withAllParentFileBrowserFolderModel [
+	"Collect and return the receiver and all its parents in the bottom to top order starting with the receiver"
+	<return: #Array>
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#withAllParentObjectsTemplate'>
+
+	^ Array streamContents: [ :aStream |
+		self withAllParentFileBrowserFolderModelDo: [ :eachParent | aStream nextPut: eachParent ] ]
+]
+
+{ #category : #'api - enumerating' }
+GtFileBrowserFolderModel >> withAllParentFileBrowserFolderModelDo: aBlock [
+	"Evaluate a given block with the receiver and all its parents of the same type"
+
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#withAllParentObjectsDoTemplate'>
+	aBlock value: self.
+	self allParentFileBrowserFolderModelDo: aBlock
 ]

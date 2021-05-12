@@ -25,6 +25,24 @@ GtFileBrowserFoldersModel >> addFileBrowserFolderModel: aFileBrowserFolderModel 
 	self onFileBrowserFolderModelAdded: aFileBrowserFolderModel
 ]
 
+{ #category : #'api - enumerating' }
+GtFileBrowserFoldersModel >> allParentFileBrowserFoldersModelDo: aBlock [
+	"Evaluate a given block with all parents of the same type as the receiver"
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#allParentObjectsDoTemplate'>
+	| aCurrentParent |
+	
+	aCurrentParent := self.
+	
+	aCurrentParent hasParentFileBrowserFolderModel
+		ifFalse: [ ^ self ].
+	aCurrentParent := aCurrentParent parentFileBrowserFolderModel.
+	aCurrentParent hasParentFileBrowserFoldersModel
+		ifFalse: [ ^ self ].
+	aCurrentParent := aCurrentParent parentFileBrowserFoldersModel.
+	aBlock value: aCurrentParent.
+	aCurrentParent allParentFileBrowserFoldersModelDo: aBlock
+]
+
 { #category : #'api - announcer' }
 GtFileBrowserFoldersModel >> announce: anAnnouncement [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
@@ -365,4 +383,23 @@ GtFileBrowserFoldersModel >> when: anAnnouncementClass send: aSelector to: anObj
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenSendToTemplate'>
 	(announcer ifNil: [ announcer := Announcer new ]) weak
 		when: anAnnouncementClass send: aSelector to: anObject
+]
+
+{ #category : #'api - enumerating' }
+GtFileBrowserFoldersModel >> withAllParentFileBrowserFoldersModel [
+	"Collect and return the receiver and all its parents in the bottom to top order starting with the receiver"
+	<return: #Array>
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#withAllParentObjectsTemplate'>
+
+	^ Array streamContents: [ :aStream |
+		self withAllParentFileBrowserFoldersModelDo: [ :eachParent | aStream nextPut: eachParent ] ]
+]
+
+{ #category : #'api - enumerating' }
+GtFileBrowserFoldersModel >> withAllParentFileBrowserFoldersModelDo: aBlock [
+	"Evaluate a given block with the receiver and all its parents of the same type"
+
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#withAllParentObjectsDoTemplate'>
+	aBlock value: self.
+	self allParentFileBrowserFoldersModelDo: aBlock
 ]

@@ -40,7 +40,7 @@ GtFileBrowserFolderTreeContentElement >> onContentChanged [
 	theFiles := self fileBrowserFolderViewModel fileBrowserFilesViewModel fileBrowserFileViewModels asArray.
 	theFiles sort: [ :a :b | a fileBrowserFileModel fileReference basename asLowercase < b fileBrowserFileModel fileReference basename asLowercase ].
 
-	tree items: theFolders, theFiles immediate: [ :eachNode |
+	tree items: theFolders, theFiles lazy: [ :eachNode |
 		eachNode value objectName = #folder
 			ifTrue: [ eachNode fileBrowserFoldersViewModel fileBrowserFolderViewModels asArray ]
 			ifFalse: [ #() ] ]
