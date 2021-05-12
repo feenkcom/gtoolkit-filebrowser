@@ -27,7 +27,13 @@ GtFileBrowserFolderBreadcrumbElement >> onFileBrowserFolderViewModelChanged [
 
 	self removeAllItems.
 	self fileBrowserFolderViewModel fileBrowserFolderModel withAllParentFileBrowserFolderModel reverseDo: [ :echFolderModel |
+		| aForeground |
+		
+		aForeground := self fileBrowserFolderViewModel fileBrowserFolderModel == echFolderModel
+			ifTrue: [ Color black ]
+			ifFalse: [ Color gray ].
+		
 		self addItem: (BrLabel new
-			aptitude: BrGlamorousLabelAptitude;
+			aptitude: (BrGlamorousLabelAptitude new foreground: aForeground);
 			text: echFolderModel fileReference absolutePath basename) ]
 ]
