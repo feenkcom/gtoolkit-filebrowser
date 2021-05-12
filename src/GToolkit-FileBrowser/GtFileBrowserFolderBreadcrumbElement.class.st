@@ -12,9 +12,8 @@ GtFileBrowserFolderBreadcrumbElement >> initialize [
 	
 	self aptitude: (BrGlamorousBreadcrumbAptitude new separator: [
 		BrLabel new
-			aptitude: (BrGlamorousLabelAptitude new thin foreground: Color gray);
-			text: '>';
-			margin: (BlInsets left: 5 right: 5) ]).
+			aptitude: (BrGlamorousLabelAptitude new foreground: Color darkGray);
+			text: DiskStore delimiter ])
 ]
 
 { #category : #'api - file browser folder view model' }
