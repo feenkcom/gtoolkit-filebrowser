@@ -30,25 +30,11 @@ GtFileBrowserListFileElement >> initialize [
 	self hMatchParent.
 	self vFitContent.
 	self cellSpacing: 3.
-	self addAptitude: BrGlamorousListItemAptitude.
 	
 	icon := self createIcon.
 	label := self createLabel.
 	
-	self addChildren: { icon . label }.
-	
-	self
-		when: BlClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			anEvent currentTarget fileBrowserFileViewModel selectFileWithoutOtherEntities ].
-
-	self
-		when: BlDoubleClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			anEvent currentTarget phlow spawnTool: (GtPhlowCompositeTool new
-				addTool: (GtInspectorTool forObject: self fileBrowserFileViewModel fileBrowserFileModel fileReference)) ].
+	self addChildren: { icon . label }
 ]
 
 { #category : #'api - file browser file view model' }
@@ -61,39 +47,4 @@ GtFileBrowserListFileElement >> onFileBrowserFileViewModelChanged [
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#onObjectChangedTemplate'>
 	
 	label text: self fileBrowserFileViewModel fileBrowserFileModel fileReference basename.
-	self updateFileSelection
-]
-
-{ #category : #'api - file browser file view model' }
-GtFileBrowserListFileElement >> subscribeToFileBrowserFileViewModel [
-	"Is sent after a new fileBrowserFileViewModel is assigned to the receiver.
-	It is required to unsubscribe from the previously subscribed objects by implementing
-	#unsubscribeFromFileBrowserFileViewModel if the receiver subscribes to them"
-	<modelSubscriber: #file>
-	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
-	
-	self fileBrowserFileViewModel
-		when: GtFileBrowserSelectedFileViewModelChanged, GtFileBrowserSelectedFolderViewModelChanged,
-				GtFileBrowserFileViewModelViewModelDeselected, GtFileBrowserFileViewModelViewModelSelected,
-				GtFileBrowserFolderViewModelViewModelDeselected, GtFileBrowserFolderViewModelViewModelSelected
-			send: #updateFileSelection
-			to: self
-]
-
-{ #category : #'api - file browser file view model' }
-GtFileBrowserListFileElement >> unsubscribeFromFileBrowserFileViewModel [
-	"Is sent before a new fileBrowserFileViewModel is assigned to the receiver.
-	Objects that subscribe to fileBrowserFileViewModel are required to implement this method."
-	<modelUnsubscriber: #file>
-	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#unsubscribeFromObjectTemplate'>
-	
-	self fileBrowserFileViewModel unsubscribe: self
-]
-
-{ #category : #'private - update' }
-GtFileBrowserListFileElement >> updateFileSelection [
-	
-	self fileBrowserFileViewModel isOnlySelectedFile
-		ifTrue: [ self states addState: BlElementState selected ]
-		ifFalse: [ self states removeState: BlElementState selected ]
 ]

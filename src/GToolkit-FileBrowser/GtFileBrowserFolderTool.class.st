@@ -8,14 +8,21 @@ Class {
 
 { #category : #'instance creation' }
 GtFileBrowserFolderTool class >> forFolder: aStringOrFileReference [
-	| aFolderFileReference aFolderModel |
-	
+	| aFolderFileReference aFolderModel aRootFolder aRootFolderModel |
+
 	aFolderFileReference := aStringOrFileReference asFileReference.
 	self
 		assert: [ aFolderFileReference isDirectory ]
 		description: [ 'Folder tool can only be creater for a folder' ].
 	
-	aFolderModel := GtFileBrowserFolderModel new fileReference: aFolderFileReference.
+	aRootFolder := Path root asFileReference.
+	aRootFolderModel := GtFileBrowserFolderModel new fileReference: aRootFolder.
+	aFolderModel := aRootFolderModel.
+
+	aFolderFileReference absolutePath withParents allButFirstDo: [ :eachPath |
+		aFolderModel := aFolderModel fileBrowserFoldersModel findFileBrowserFolderModel: eachPath asFileReference.
+		aFolderModel ifNil: [ self error: 'Not able to read the path to the given folder' ] ].
+
 	^ self forFolderModel: aFolderModel
 ]
 
