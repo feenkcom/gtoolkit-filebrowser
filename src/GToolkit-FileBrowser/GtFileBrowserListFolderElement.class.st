@@ -25,6 +25,13 @@ GtFileBrowserListFolderElement >> createLabel [
 		beNormalSize
 ]
 
+{ #category : #'private - instance creation' }
+GtFileBrowserListFolderElement >> createPhlowFolderTool [
+	^ GtPhlowCompositeTool new
+		addTool: (GtFileBrowserFolderTool forFolderModel: self fileBrowserFolderViewModel fileBrowserFolderModel);
+		addTool: (GtInspectorTool forObject: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference)
+]
+
 { #category : #initialization }
 GtFileBrowserListFolderElement >> initialize [
 	super initialize.
@@ -54,10 +61,7 @@ GtFileBrowserListFolderElement >> initialize [
 		when: BlDoubleClickEvent
 		do: [ :anEvent | 
 			anEvent consumed: true.
-			anEvent currentTarget phlow
-				spawnTool: (GtPhlowCompositeTool new
-					addTool: (GtFileBrowserFolderTool forFolderModel: self fileBrowserFolderViewModel fileBrowserFolderModel);
-					addTool: (GtInspectorTool forObject: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference)) ]
+			anEvent currentTarget phlow spawnTool: self createPhlowFolderTool ]
 ]
 
 { #category : #'api - file browser folder view model' }
@@ -104,5 +108,8 @@ GtFileBrowserListFolderElement >> updateFolderSelection [
 	
 	self fileBrowserFolderViewModel isOnlySelectedFolder
 		ifTrue: [ self states addState: BlElementState selected ]
-		ifFalse: [ self states removeState: BlElementState selected ]
+		ifFalse: [ self states removeState: BlElementState selected ].
+		
+	self fileBrowserFolderViewModel isOnlySelectedFolder
+		ifTrue: [ self phlow selectTool: self createPhlowFolderTool ]
 ]

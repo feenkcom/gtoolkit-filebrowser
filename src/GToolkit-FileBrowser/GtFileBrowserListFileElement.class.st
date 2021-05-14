@@ -22,6 +22,12 @@ GtFileBrowserListFileElement >> createLabel [
 		beNormalSize
 ]
 
+{ #category : #'private - instance creation' }
+GtFileBrowserListFileElement >> createPhlowFileTool [
+	^ GtPhlowCompositeTool new
+		addTool: (GtInspectorTool forObject: self fileBrowserFileViewModel fileBrowserFileModel fileReference)
+]
+
 { #category : #initialization }
 GtFileBrowserListFileElement >> initialize [
 	super initialize.
@@ -47,8 +53,7 @@ GtFileBrowserListFileElement >> initialize [
 		when: BlDoubleClickEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
-			anEvent currentTarget phlow spawnTool: (GtPhlowCompositeTool new
-				addTool: (GtInspectorTool forObject: self fileBrowserFileViewModel fileBrowserFileModel fileReference)) ].
+			anEvent currentTarget phlow spawnTool: self createPhlowFileTool ].
 ]
 
 { #category : #'api - file browser file view model' }
@@ -95,5 +100,8 @@ GtFileBrowserListFileElement >> updateFileSelection [
 	
 	self fileBrowserFileViewModel isOnlySelectedFile
 		ifTrue: [ self states addState: BlElementState selected ]
-		ifFalse: [ self states removeState: BlElementState selected ]
+		ifFalse: [ self states removeState: BlElementState selected ].
+		
+	self fileBrowserFileViewModel isOnlySelectedFile
+		ifTrue: [ self phlow selectTool: self createPhlowFileTool ]
 ]
