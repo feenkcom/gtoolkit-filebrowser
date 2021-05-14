@@ -29,7 +29,11 @@ GtFileBrowserFolderTreeContentElement >> initialize [
 	self matchParent.
 
 	tree := BrColumnedTree new.
+	tree withoutSelection.
 	tree nodeType: [ :aTypeFactory :eachFolderOrFileViewModel | eachFolderOrFileViewModel value objectName ].
+
+	tree rowStencil: GtFileBrowserTreeRowElementStencilBuilder new.
+	tree rowDataBinder: GtFileBrowserTreeRowDataBinder new.
 
 	tree column
 		title: 'Name';
@@ -41,7 +45,7 @@ GtFileBrowserFolderTreeContentElement >> initialize [
 			eachFolderOrFileViewModel value isFileBrowserFolderViewModel
 				ifTrue: [ eachElement fileBrowserFolderViewModel: eachFolderOrFileViewModel value ]
 				ifFalse: [ eachElement fileBrowserFileViewModel: eachFolderOrFileViewModel value ] ].
-			
+
 	tree column
 		title: 'Size';
 		cellStencil: [ :anItemType |

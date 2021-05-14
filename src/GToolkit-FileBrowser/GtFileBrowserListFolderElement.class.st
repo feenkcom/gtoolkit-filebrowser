@@ -25,13 +25,6 @@ GtFileBrowserListFolderElement >> createLabel [
 		beNormalSize
 ]
 
-{ #category : #'private - instance creation' }
-GtFileBrowserListFolderElement >> createPhlowFolderTool [
-	^ GtPhlowCompositeTool new
-		addTool: (GtFileBrowserFolderTool forFolderModel: self fileBrowserFolderViewModel fileBrowserFolderModel);
-		addTool: (GtInspectorTool forObject: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference)
-]
-
 { #category : #initialization }
 GtFileBrowserListFolderElement >> initialize [
 	super initialize.
@@ -39,29 +32,13 @@ GtFileBrowserListFolderElement >> initialize [
 	self hMatchParent.
 	self vFitContent.
 	self cellSpacing: 3.
-	self addAptitude: BrGlamorousListItemAptitude.
 
 	icon := self createIcon.
 	label := self createLabel.
 	
 	self addChildren: { icon . label }.
 
-	self addAptitude:
-		(BrGlamorousWithContextMenuAptitude
-			content: [ BrGlamorousSimpleContextMenuContent new
-				items: {('Delete' -> [ :anEvent | self fileBrowserFolderViewModel fileBrowserFolderModel deleteFolder ])} ]).
-
-	self
-		when: BlClickEvent
-		do: [ :anEvent |
-			anEvent consumed: true.
-			anEvent currentTarget fileBrowserFolderViewModel selectFolderWithoutOtherEntities ].
-
-	self
-		when: BlDoubleClickEvent
-		do: [ :anEvent | 
-			anEvent consumed: true.
-			anEvent currentTarget phlow spawnTool: self createPhlowFolderTool ]
+	
 ]
 
 { #category : #'api - file browser folder view model' }
@@ -73,43 +50,5 @@ GtFileBrowserListFolderElement >> onFileBrowserFolderViewModelChanged [
 	wish to perform an operation that requires an announcement, but keep in mind that this is not the most efficient way"
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#onObjectChangedTemplate'>
 	
-	label text: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference basename.
-	self updateFolderSelection
-]
-
-{ #category : #'api - file browser folder view model' }
-GtFileBrowserListFolderElement >> subscribeToFileBrowserFolderViewModel [
-	"Is sent after a new fileBrowserFolderViewModel is assigned to the receiver.
-	It is required to unsubscribe from the previously subscribed objects by implementing
-	#unsubscribeFromFileBrowserFolderViewModel if the receiver subscribes to them"
-	<modelSubscriber: #folder>
-	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#subscribeToObjectTemplate'>
-	
-	self fileBrowserFolderViewModel
-		when: GtFileBrowserSelectedFileViewModelChanged, GtFileBrowserSelectedFolderViewModelChanged,
-				GtFileBrowserFileViewModelViewModelDeselected, GtFileBrowserFileViewModelViewModelSelected,
-				GtFileBrowserFolderViewModelViewModelDeselected, GtFileBrowserFolderViewModelViewModelSelected
-			send: #updateFolderSelection
-			to: self
-]
-
-{ #category : #'api - file browser folder view model' }
-GtFileBrowserListFolderElement >> unsubscribeFromFileBrowserFolderViewModel [
-	"Is sent before a new fileBrowserFolderViewModel is assigned to the receiver.
-	Objects that subscribe to fileBrowserFolderViewModel are required to implement this method."
-	<modelUnsubscriber: #folder>
-	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#unsubscribeFromObjectTemplate'>
-	
-	self fileBrowserFolderViewModel unsubscribe: self
-]
-
-{ #category : #'private - update' }
-GtFileBrowserListFolderElement >> updateFolderSelection [
-	
-	self fileBrowserFolderViewModel isOnlySelectedFolder
-		ifTrue: [ self states addState: BlElementState selected ]
-		ifFalse: [ self states removeState: BlElementState selected ].
-		
-	self fileBrowserFolderViewModel isOnlySelectedFolder
-		ifTrue: [ self phlow selectTool: self createPhlowFolderTool ]
+	label text: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference basename
 ]
