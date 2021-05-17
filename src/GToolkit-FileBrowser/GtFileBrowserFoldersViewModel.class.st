@@ -5,8 +5,8 @@ Class {
 	#classTraits : 'TGtWithFileBrowserFoldersModel classTrait + TGtWithSelectedFolderViewModel classTrait',
 	#instVars : [
 		'fileBrowserFolderViewModels',
-		'announcer',
-		'parentFileBrowserFolderViewModel'
+		'parentFileBrowserFolderViewModel',
+		'announcer'
 	],
 	#category : #'GToolkit-FileBrowser-View Models'
 }
@@ -21,11 +21,28 @@ GtFileBrowserFoldersViewModel >> addFileBrowserFolderModel: aFileBrowserFolder [
 	self fileBrowserFoldersModel addFileBrowserFolderModel: aFileBrowserFolder
 ]
 
+{ #category : #'api - enumerating' }
+GtFileBrowserFoldersViewModel >> allParentFileBrowserFoldersViewModelDo: aBlock [
+	"Evaluate a given block with all parents of the same type as the receiver"
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#allParentObjectsDoTemplate'>
+	| aCurrentParent |
+	
+	aCurrentParent := self.
+	
+	aCurrentParent hasParentFileBrowserFolderViewModel
+		ifFalse: [ ^ self ].
+	aCurrentParent := aCurrentParent parentFileBrowserFolderViewModel.
+	aCurrentParent hasParentFileBrowserFoldersViewModel
+		ifFalse: [ ^ self ].
+	aCurrentParent := aCurrentParent parentFileBrowserFoldersViewModel.
+	aBlock value: aCurrentParent.
+	aCurrentParent allParentFileBrowserFoldersViewModelDo: aBlock
+]
+
 { #category : #'api - announcer' }
 GtFileBrowserFoldersViewModel >> announce: anAnnouncement [
-	<generatedFrom: #'GtRobocoderMetamodelNotifierDerive>>#announceTemplate'>
+	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
 	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
-
 	"Dispatch anAnnouncement to the parent objects if they are assigned"
 	self hasParentFileBrowserFolderViewModel
 		ifTrue: [ self parentFileBrowserFolderViewModel announce: anAnnouncement ].
@@ -65,6 +82,23 @@ GtFileBrowserFoldersViewModel >> createFileBrowserFolderViewModelsFor: aChildMod
 	aNewChild parentFileBrowserFoldersViewModel: self.
 	aNewChild fileBrowserFolderModel: aChildModel.
 	^ aNewChild
+]
+
+{ #category : #'api - selection' }
+GtFileBrowserFoldersViewModel >> deselectAllFromTopMostParent [
+	"Deselect any selected child starting from the top most parent"
+	<propertyUnsetFromParent: #selectedFolderViewModel>
+	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#unsetAllFromTopMostParentTemplate'>
+	
+	self topMostParentsWithSelectionDo: [ :eachParent | eachParent deselectChildren ]
+]
+
+{ #category : #'api - selection' }
+GtFileBrowserFoldersViewModel >> deselectChildren [
+	"Deselect any selected child"
+	<propertyUnsetChildren: #selectedFolderViewModel>
+	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#unsetChildrenTemplate'>
+	self deselectFolderViewModel.
 ]
 
 { #category : #'api - accessing' }
@@ -317,7 +351,7 @@ GtFileBrowserFoldersViewModel >> onPreviousSelectedFolderViewModelUnset: aPrevio
 	<propertyUnsetHook: #selectedFolderViewModel>
 	<generatedFrom: #'TGtRobocoderWithPropertyTraitTemplate>>#onPreviousPropertyUnsetHookTemplate'>
 
-	aPreviousSelectedFolderViewModel deselectOtherEntities.
+	aPreviousSelectedFolderViewModel deselectChildren.
 	aPreviousSelectedFolderViewModel notifyFolderDeselected
 ]
 
@@ -379,6 +413,32 @@ GtFileBrowserFoldersViewModel >> subscribeToFileBrowserFoldersModel [
 	self fileBrowserFoldersModel when: GtFileBrowserFolderModelRemovedAnnouncement send: #onFileBrowserFolderRemoved: to: self.
 ]
 
+{ #category : #'api - selection' }
+GtFileBrowserFoldersViewModel >> topMostParentsWithSelectionDo: aBlock [
+	"Evaluate a given block with each top most parent that has a selectedFolderViewModel property"
+	<propertyTopMostParents: #selectedFolderViewModel>
+	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#topMostParentsWithPropertyDoTemplate'>
+	
+	| aCurrentParent aParentFound |
+	
+	aParentFound := false.
+	
+	aCurrentParent := self.
+	(aCurrentParent notNil and: [ aCurrentParent hasParentFileBrowserFolderViewModel ])
+		ifFalse: [ aCurrentParent := nil ]
+		ifTrue: [ aCurrentParent := aCurrentParent parentFileBrowserFolderViewModel ].
+	
+	aCurrentParent
+		ifNotNil: [
+			aParentFound := true.
+			aCurrentParent topMostParentsWithSelectionDo: aBlock ].
+	
+	
+	"there is no assigned parent, meaning I am the topmost"
+	aParentFound
+		ifFalse: [ aBlock value: self ].
+]
+
 { #category : #'api - announcer' }
 GtFileBrowserFoldersViewModel >> unsubscribe: anObject [
 	"Unsubscribe all subscriptions of anObject from the receiver"
@@ -408,4 +468,23 @@ GtFileBrowserFoldersViewModel >> when: anAnnouncementClass send: aSelector to: a
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenSendToTemplate'>
 	^ (announcer ifNil: [ announcer := Announcer new ]) weak
 		when: anAnnouncementClass send: aSelector to: anObject
+]
+
+{ #category : #'api - enumerating' }
+GtFileBrowserFoldersViewModel >> withAllParentFileBrowserFoldersViewModel [
+	"Collect and return the receiver and all its parents in the bottom to top order starting with the receiver"
+	<return: #Array>
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#withAllParentObjectsTemplate'>
+
+	^ Array streamContents: [ :aStream |
+		self withAllParentFileBrowserFoldersViewModelDo: [ :eachParent | aStream nextPut: eachParent ] ]
+]
+
+{ #category : #'api - enumerating' }
+GtFileBrowserFoldersViewModel >> withAllParentFileBrowserFoldersViewModelDo: aBlock [
+	"Evaluate a given block with the receiver and all its parents of the same type"
+
+	<generatedFrom: #'TGtRobocoderMetamodelParentAccessorTemplate>>#withAllParentObjectsDoTemplate'>
+	aBlock value: self.
+	self allParentFileBrowserFoldersViewModelDo: aBlock
 ]

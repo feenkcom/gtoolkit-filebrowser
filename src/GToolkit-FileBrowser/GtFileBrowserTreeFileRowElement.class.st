@@ -36,7 +36,7 @@ GtFileBrowserTreeFileRowElement >> initialize [
 		when: BlDoubleClickEvent
 		do: [ :anEvent |
 			anEvent consumed: true.
-			anEvent currentTarget phlow spawnTool: self createPhlowFileTool ].
+			anEvent currentTarget phlow spawnTool: self createPhlowFileTool ]
 ]
 
 { #category : #'api - file browser file view model' }
