@@ -33,7 +33,23 @@ GtFileBrowserFolderBreadcrumbElement >> onFileBrowserFolderViewModelChanged [
 			ifTrue: [ Color black ]
 			ifFalse: [ Color gray ].
 		
-		self addItem: (BrLabel new
+		self addItem: (BrButton new
 			aptitude: (BrGlamorousLabelAptitude new foreground: aForeground);
-			text: echFolderModel fileReference absolutePath basename) ]
+			label: echFolderModel fileReference absolutePath basename;
+			model: echFolderModel;
+			action: [ :aButton |
+				| aPhlowTool |
+			
+				aPhlowTool := GtPhlowCompositeTool new
+					addTool: (GtFileBrowserFolderTool forFolderModel: aButton model);
+					addTool: (GtInspectorTool forObject: aButton model fileReference).
+				self phlow selectTool: aPhlowTool ];
+			when: BlDoubleClickEvent do: [ :anEvent |
+				| aPhlowTool |
+				
+				anEvent consumed: true.
+				aPhlowTool := GtPhlowCompositeTool new
+					addTool: (GtFileBrowserFolderTool forFolderModel: anEvent currentTarget model);
+					addTool: (GtInspectorTool forObject: anEvent currentTarget model fileReference).
+				anEvent currentTarget phlow spawnTool: aPhlowTool ]) ]
 ]
