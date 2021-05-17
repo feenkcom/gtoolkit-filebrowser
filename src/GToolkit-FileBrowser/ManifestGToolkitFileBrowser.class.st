@@ -19,6 +19,7 @@ ManifestGToolkitFileBrowser class >> fileBrowserModel [
 @derive parent
 @derive phlowList
 @derive announcer
+@derive notify
 @derive api
 @derive print
 @derive typeTest
