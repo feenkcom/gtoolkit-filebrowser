@@ -4,27 +4,35 @@ Class {
 	#traits : 'TGtWithFileBrowserFileModel',
 	#classTraits : 'TGtWithFileBrowserFileModel classTrait',
 	#instVars : [
-		'announcer',
-		'parentFileBrowserFilesViewModel'
+		'parentFileBrowserFilesViewModel',
+		'announcer'
 	],
 	#category : #'GToolkit-FileBrowser-View Models'
 }
 
 { #category : #'api - announcer' }
 GtFileBrowserFileViewModel >> announce: anAnnouncement [
-	<generatedFrom: #'GtRobocoderMetamodelNotifierDerive>>#announceTemplate'>
+	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#announceTemplate'>
 	announcer ifNotNil: [ :anAnnouncer | anAnnouncer announce: anAnnouncement ].
-
 	"Dispatch anAnnouncement to the parent objects if they are assigned"
 	self hasParentFileBrowserFilesViewModel
 		ifTrue: [ self parentFileBrowserFilesViewModel announce: anAnnouncement ].
 ]
 
 { #category : #'api - selection' }
-GtFileBrowserFileViewModel >> deselectOtherEntities [
+GtFileBrowserFileViewModel >> deselectAllFromTopMostParent [
+	"Deselect any selected child starting from the top most parent"
+	<propertyUnsetFromParent: #selectedFileViewModel>
+	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#unsetAllFromTopMostParentTemplate'>
+	
+	self topMostParentsWithSelectionDo: [ :eachParent | eachParent deselectChildren ]
+]
+
+{ #category : #'api - selection' }
+GtFileBrowserFileViewModel >> deselectChildren [
 	"Deselect any selected child"
-	<propertyUnsetOthers: #selectedFileViewModel>
-	<generatedFrom: #'TGtRobocoderMetamodelPropertyForChildTemplate>>#unsetOtherObjectsTemplate'>
+	<propertyUnsetChildren: #selectedFileViewModel>
+	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#unsetChildrenTemplate'>
 ]
 
 { #category : #'api - selection' }
@@ -181,8 +189,34 @@ GtFileBrowserFileViewModel >> selectFileWithoutOtherEntities [
 	"Select a file and deselect other selected children"
 
 	<generatedFrom: #'TGtRobocoderMetamodelPropertyForChildTemplate>>#setObjectWithoutOtherEntitiesTemplate'>
-	self deselectOtherEntities.
+	self deselectAllFromTopMostParent.
 	self selectFile
+]
+
+{ #category : #'api - selection' }
+GtFileBrowserFileViewModel >> topMostParentsWithSelectionDo: aBlock [
+	"Evaluate a given block with each top most parent that has a selection property"
+	<propertyTopMostParents: #selectedFileViewModel>
+	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#topMostParentsWithPropertyDoTemplate'>
+	
+	| aCurrentParent aParentFound |
+	
+	aParentFound := false.
+	
+	aCurrentParent := self.
+	(aCurrentParent notNil and: [ aCurrentParent hasParentFileBrowserFilesViewModel ])
+		ifFalse: [ aCurrentParent := nil ]
+		ifTrue: [ aCurrentParent := aCurrentParent parentFileBrowserFilesViewModel ].
+	
+	aCurrentParent
+		ifNotNil: [
+			aParentFound := true.
+			aCurrentParent topMostParentsWithSelectionDo: aBlock ].
+	
+	
+	"there is no assigned parent, meaning I am the topmost"
+	aParentFound
+		ifFalse: [ aBlock value: self ].
 ]
 
 { #category : #'api - announcer' }
