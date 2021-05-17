@@ -287,7 +287,7 @@ GtFileBrowserFolderViewModel >> selectFolderWithoutOtherEntities [
 
 { #category : #'api - selection' }
 GtFileBrowserFolderViewModel >> topMostParentsWithSelectionDo: aBlock [
-	"Evaluate a given block with each top most parent that has a selectedFolderViewModel property"
+	"Evaluate a given block with each top most parent that has a selection property"
 	<propertyTopMostParents: #selectedFolderViewModel>
 	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#topMostParentsWithPropertyDoTemplate'>
 	

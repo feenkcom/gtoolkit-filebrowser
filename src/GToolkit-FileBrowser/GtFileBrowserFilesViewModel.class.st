@@ -397,7 +397,7 @@ GtFileBrowserFilesViewModel >> subscribeToFileBrowserFilesModel [
 
 { #category : #'api - selection' }
 GtFileBrowserFilesViewModel >> topMostParentsWithSelectionDo: aBlock [
-	"Evaluate a given block with each top most parent that has a selectedFileViewModel property"
+	"Evaluate a given block with each top most parent that has a selection property"
 	<propertyTopMostParents: #selectedFileViewModel>
 	<generatedFrom: #'TGtRobocoderMetamodelPropertyForParentTemplate>>#topMostParentsWithPropertyDoTemplate'>
 	
