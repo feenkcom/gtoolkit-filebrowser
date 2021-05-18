@@ -43,13 +43,5 @@ GtFileBrowserFolderBreadcrumbElement >> onFileBrowserFolderViewModelChanged [
 				aPhlowTool := GtPhlowCompositeTool new
 					addTool: (GtFileBrowserFolderTool forFolderModel: aButton model);
 					addTool: (GtInspectorTool forObject: aButton model fileReference).
-				self phlow selectTool: aPhlowTool ];
-			when: BlDoubleClickEvent do: [ :anEvent |
-				| aPhlowTool |
-				
-				anEvent consumed: true.
-				aPhlowTool := GtPhlowCompositeTool new
-					addTool: (GtFileBrowserFolderTool forFolderModel: anEvent currentTarget model);
-					addTool: (GtInspectorTool forObject: anEvent currentTarget model fileReference).
-				anEvent currentTarget phlow spawnTool: aPhlowTool ]) ]
+				self phlow spawnTool: aPhlowTool ]) ]
 ]
