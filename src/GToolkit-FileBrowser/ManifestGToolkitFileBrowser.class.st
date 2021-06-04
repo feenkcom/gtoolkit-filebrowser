@@ -1,5 +1,7 @@
 "
 Haba
+
+
 "
 Class {
 	#name : #ManifestGToolkitFileBrowser,
