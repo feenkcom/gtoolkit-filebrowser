@@ -1,1 +1,1 @@
-Package { #name : 'BaselineOfGToolkitFileBrowser' }
+Package { #name : #BaselineOfGToolkitFileBrowser }
