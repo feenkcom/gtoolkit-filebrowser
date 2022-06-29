@@ -27,7 +27,7 @@ GtFileBrowserSpotterStart >> gtSpotterForDirectoriesFor: aStep [
 		title: 'Directories';
 		candidatesLimit: Float infinity;
 		itemName: [ :eachFolderModel | eachFolderModel fileReference basename ];
-		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
+		itemIcon: [ BrGlamorousIcons glamorousFolder ];
 		filter: GtFilterSubstring
 ]
 
@@ -41,7 +41,7 @@ GtFileBrowserSpotterStart >> gtSpotterForFilesFor: aStep [
 		title: 'Files';
 		candidatesLimit: Float infinity;
 		itemName: [ :eachFileModel | eachFileModel fileReference basename ];
-		itemIcon: [ GLMUIThemeExtraIcons glamorousFolder ];
+		itemIcon: [ BrGlamorousIcons folder ];
 		filter: GtFilterSubstring
 ]
 
