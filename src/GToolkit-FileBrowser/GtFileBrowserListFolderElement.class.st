@@ -20,6 +20,13 @@ GtFileBrowserListFolderElement >> createIcon [
 	^ BrGlamorousVectorIcons folder asElement
 ]
 
+{ #category : #'private - instance creation' }
+GtFileBrowserListFolderElement >> createLabel [
+	^ BrLabel new
+		aptitude: BrGlamorousLabelAptitude;
+		beNormalSize
+]
+
 { #category : #initialization }
 GtFileBrowserListFolderElement >> initialize [
 	super initialize.
@@ -29,11 +36,11 @@ GtFileBrowserListFolderElement >> initialize [
 	self cellSpacing: 3.
 
 	icon := self createIcon.
-	label := BrLabel new beNormalSize.
+	label := self createLabel.
+	
+	self addChildren: { icon . label }.
 
-	self
-		addChildren: {icon.
-				label}
+	
 ]
 
 { #category : #'api - file browser folder view model' }
