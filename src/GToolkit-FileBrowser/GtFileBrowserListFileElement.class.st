@@ -15,6 +15,13 @@ GtFileBrowserListFileElement >> createIcon [
 	^ BrGlamorousIcons file asElement
 ]
 
+{ #category : #'private - instance creation' }
+GtFileBrowserListFileElement >> createLabel [
+	^ BrLabel new
+		aptitude: BrGlamorousLabelAptitude;
+		beNormalSize
+]
+
 { #category : #initialization }
 GtFileBrowserListFileElement >> initialize [
 	super initialize.
@@ -23,13 +30,11 @@ GtFileBrowserListFileElement >> initialize [
 	self hMatchParent.
 	self vFitContent.
 	self cellSpacing: 3.
-
+	
 	icon := self createIcon.
-	label := BrLabel new beNormalSize.
-
-	self
-		addChildren: {icon.
-				label}
+	label := self createLabel.
+	
+	self addChildren: { icon . label }
 ]
 
 { #category : #'api - file browser file view model' }
