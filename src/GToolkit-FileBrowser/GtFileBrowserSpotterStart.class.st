@@ -18,31 +18,29 @@ GtFileBrowserSpotterStart >> fileBrowserFolderModelBlock: anObject [
 ]
 
 { #category : #searches }
-GtFileBrowserSpotterStart >> gtSpotterForDirectoriesFor: aStep [
+GtFileBrowserSpotterStart >> gtSpotterForDirectoriesFor: aSearch [
 	<gtSearch>
-
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 5;
-		allCandidates: [ self fileBrowserFolderModelBlock value fileBrowserFoldersModel fileBrowserFolderModels ];
+		items: [ self fileBrowserFolderModelBlock value fileBrowserFoldersModel
+				fileBrowserFolderModels ];
 		title: 'Directories';
 		candidatesLimit: Float infinity;
 		itemName: [ :eachFolderModel | eachFolderModel fileReference basename ];
-		itemIcon: [ BrGlamorousIcons glamorousFolder ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #searches }
-GtFileBrowserSpotterStart >> gtSpotterForFilesFor: aStep [
+GtFileBrowserSpotterStart >> gtSpotterForFilesFor: aSearch [
 	<gtSearch>
-
-	^ aStep listProcessor
+	^ aSearch list
 		priority: 10;
-		allCandidates: [ self fileBrowserFolderModelBlock value fileBrowserFilesModel fileBrowserFileModels ];
+		items: [ self fileBrowserFolderModelBlock value fileBrowserFilesModel
+				fileBrowserFileModels ];
 		title: 'Files';
 		candidatesLimit: Float infinity;
 		itemName: [ :eachFileModel | eachFileModel fileReference basename ];
-		itemIcon: [ BrGlamorousIcons folder ];
-		filter: GtFilterSubstring
+		filterBySubstring
 ]
 
 { #category : #printing }
