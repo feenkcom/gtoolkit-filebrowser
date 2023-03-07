@@ -1,5 +1,5 @@
 Class {
-	#name : #GtFileBrowserFolderBreadcrumbElement,
+	#name : #GtFileBrowserDirectoryBreadcrumbElement,
 	#superclass : #BrBreadcrumb,
 	#traits : 'TGtWithFileBrowserFolderViewModel',
 	#classTraits : 'TGtWithFileBrowserFolderViewModel classTrait',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : #initialization }
-GtFileBrowserFolderBreadcrumbElement >> initialize [
+GtFileBrowserDirectoryBreadcrumbElement >> initialize [
 	super initialize.
 	
 	self aptitude: (BrGlamorousBreadcrumbAptitude new separator: [
@@ -17,7 +17,7 @@ GtFileBrowserFolderBreadcrumbElement >> initialize [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserFolderBreadcrumbElement >> onFileBrowserFolderViewModelChanged [
+GtFileBrowserDirectoryBreadcrumbElement >> onFileBrowserFolderViewModelChanged [
 	"Is sent when a new fileBrowserFolderViewModel is assigned to the receiver.
 	Note: #onFileBrowserFolderViewModelChanged is sent before #subscribeToFileBrowserFolderViewModel
 	which means that if you perform any operation that triggers an announcement it will be ignored because the receiver

@@ -7,6 +7,6 @@ Class {
 { #category : #'api - instantiation' }
 GtFileBrowserTreeRowElementStencilBuilder >> createRowElement [
 	^ self itemType = #folder
-		ifTrue: [ GtFileBrowserTreeFolderRowElement new ]
+		ifTrue: [ GtFileBrowserTreeDirectoryRowElement new ]
 		ifFalse: [ GtFileBrowserTreeFileRowElement new ]
 ]

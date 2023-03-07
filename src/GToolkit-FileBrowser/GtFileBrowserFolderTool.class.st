@@ -41,7 +41,7 @@ GtFileBrowserFolderTool >> asElementDo: aOneArgBlock [
 	"Create a tool element and execute the block."
 	| aFolderElement |
 	
-	aFolderElement := GtFileBrowserFolderElement new
+	aFolderElement := GtFileBrowserDirectoryElement new
 		fileBrowserFolderViewModel: self fileBrowserFolderViewModel.
 	
 	^ aOneArgBlock cull: aFolderElement cull: self
