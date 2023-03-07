@@ -1,50 +1,50 @@
-"
-I represent a file in a content list of a folder {{gtClass:GtFileBrowserFolderElement}}
-
-
-"
 Class {
-	#name : #GtFileBrowserListFolderElement,
-	#superclass : #BrHorizontalPane,
+	#name : #GtFileBrowserDirectoryElement,
+	#superclass : #BrVerticalPane,
 	#traits : 'TGtWithFileBrowserFolderViewModel',
 	#classTraits : 'TGtWithFileBrowserFolderViewModel classTrait',
 	#instVars : [
-		'icon',
-		'label'
+		'toolbar',
+		'content'
 	],
 	#category : #'GToolkit-FileBrowser-Views'
 }
 
 { #category : #'private - instance creation' }
-GtFileBrowserListFolderElement >> createIcon [
-	^ BrGlamorousVectorIcons folder asElement
+GtFileBrowserDirectoryElement >> createFolderContent [
+	^ GtFileBrowserDirectoryTreeContentElement new
 ]
 
 { #category : #'private - instance creation' }
-GtFileBrowserListFolderElement >> createLabel [
-	^ BrLabel new
-		aptitude: BrGlamorousLabelAptitude;
-		beNormalSize
+GtFileBrowserDirectoryElement >> createFolderToolbar [
+	^ GtFileBrowserDirectoryToolbarElement new
 ]
 
 { #category : #initialization }
-GtFileBrowserListFolderElement >> initialize [
+GtFileBrowserDirectoryElement >> initialize [
 	super initialize.
-	self alignCenterLeft.
-	self hMatchParent.
-	self vFitContent.
-	self cellSpacing: 3.
-
-	icon := self createIcon.
-	label := self createLabel.
 	
-	self addChildren: { icon . label }.
-
+	self matchParent.
+	self background: Color white.
 	
+	self padding: (BlInsets all: 10).
+
+	toolbar := self createFolderToolbar. 
+	toolbar
+		hMatchParent
+		vFitContent;
+		margin: (BlInsets top: 0 left: 13 bottom: 15 right: 0).
+	content := self createFolderContent.
+	content matchParent.
+	
+	self addChildren: { 
+		toolbar.
+		content
+	}
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserListFolderElement >> onFileBrowserFolderViewModelChanged [
+GtFileBrowserDirectoryElement >> onFileBrowserFolderViewModelChanged [
 	"Is sent when a new fileBrowserFolderViewModel is assigned to the receiver.
 	Note: #onFileBrowserFolderViewModelChanged is sent before #subscribeToFileBrowserFolderViewModel
 	which means that if you perform any operation that triggers an announcement it will be ignored because the receiver
@@ -52,5 +52,6 @@ GtFileBrowserListFolderElement >> onFileBrowserFolderViewModelChanged [
 	wish to perform an operation that requires an announcement, but keep in mind that this is not the most efficient way"
 	<generatedFrom: #'TGtRobocoderWithObjectTraitTemplate>>#onObjectChangedTemplate'>
 	
-	label text: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference basename
+	toolbar fileBrowserFolderViewModel: self fileBrowserFolderViewModel.
+	content fileBrowserFolderViewModel: self fileBrowserFolderViewModel
 ]

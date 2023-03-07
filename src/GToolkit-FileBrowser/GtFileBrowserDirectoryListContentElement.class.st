@@ -1,5 +1,5 @@
 Class {
-	#name : #GtFileBrowserFolderListContentElement,
+	#name : #GtFileBrowserDirectoryListContentElement,
 	#superclass : #BrVerticalPane,
 	#traits : 'TGtWithFileBrowserFolderViewModel',
 	#classTraits : 'TGtWithFileBrowserFolderViewModel classTrait',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #initialization }
-GtFileBrowserFolderListContentElement >> initialize [
+GtFileBrowserDirectoryListContentElement >> initialize [
 	super initialize.
 
 	self matchParent.
@@ -20,7 +20,7 @@ GtFileBrowserFolderListContentElement >> initialize [
 	list nodeType: [ :aTypeFactory :eachFolderOrFileViewModel | eachFolderOrFileViewModel value objectName ].
 	list nodeStencil: [ :anItemType |
 		anItemType = #folder
-			ifTrue: [ GtFileBrowserListFolderElement new ]
+			ifTrue: [ GtFileBrowserListDirectoryElement new ]
 			ifFalse: [ GtFileBrowserListFileElement new ] ].
 	list nodeDataBinder: [ :eachElement :eachFolderOrFileViewModel |
 		eachFolderOrFileViewModel value objectName = #folder
@@ -31,7 +31,7 @@ GtFileBrowserFolderListContentElement >> initialize [
 ]
 
 { #category : #'private - event handling' }
-GtFileBrowserFolderListContentElement >> onContentChanged [
+GtFileBrowserDirectoryListContentElement >> onContentChanged [
 	| theFolders theFiles |
 	
 	theFolders := self fileBrowserFolderViewModel fileBrowserFoldersViewModel fileBrowserFolderViewModels asArray.
@@ -44,7 +44,7 @@ GtFileBrowserFolderListContentElement >> onContentChanged [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserFolderListContentElement >> onFileBrowserFolderViewModelChanged [
+GtFileBrowserDirectoryListContentElement >> onFileBrowserFolderViewModelChanged [
 	"Is sent when a new fileBrowserFolderViewModel is assigned to the receiver.
 	Note: #onFileBrowserFolderViewModelChanged is sent before #subscribeToFileBrowserFolderViewModel
 	which means that if you perform any operation that triggers an announcement it will be ignored because the receiver
@@ -56,7 +56,7 @@ GtFileBrowserFolderListContentElement >> onFileBrowserFolderViewModelChanged [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserFolderListContentElement >> subscribeToFileBrowserFolderViewModel [
+GtFileBrowserDirectoryListContentElement >> subscribeToFileBrowserFolderViewModel [
 	"Is sent after a new fileBrowserFolderViewModel is assigned to the receiver.
 	It is required to unsubscribe from the previously subscribed objects by implementing
 	#unsubscribeFromFileBrowserFolderViewModel if the receiver subscribes to them"
@@ -75,7 +75,7 @@ GtFileBrowserFolderListContentElement >> subscribeToFileBrowserFolderViewModel [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserFolderListContentElement >> unsubscribeFromFileBrowserFolderViewModel [
+GtFileBrowserDirectoryListContentElement >> unsubscribeFromFileBrowserFolderViewModel [
 	"Is sent before a new fileBrowserFolderViewModel is assigned to the receiver.
 	Objects that subscribe to fileBrowserFolderViewModel are required to implement this method."
 	<modelUnsubscriber: #folder>

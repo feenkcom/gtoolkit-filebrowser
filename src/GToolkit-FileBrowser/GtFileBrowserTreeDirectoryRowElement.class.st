@@ -1,5 +1,5 @@
 Class {
-	#name : #GtFileBrowserTreeFolderRowElement,
+	#name : #GtFileBrowserTreeDirectoryRowElement,
 	#superclass : #BrHorizontalPane,
 	#traits : 'TGtWithFileBrowserFolderViewModel',
 	#classTraits : 'TGtWithFileBrowserFolderViewModel classTrait',
@@ -7,19 +7,19 @@ Class {
 }
 
 { #category : #'private - instance creation' }
-GtFileBrowserTreeFolderRowElement >> createPhlowFolderTool [
+GtFileBrowserTreeDirectoryRowElement >> createPhlowFolderTool [
 	^ GtPhlowCompositeTool new
 		addTool: (GtFileBrowserFolderTool forFolderModel: self fileBrowserFolderViewModel fileBrowserFolderModel);
 		addTool: (GtInspectorTool forObject: self fileBrowserFolderViewModel fileBrowserFolderModel fileReference)
 ]
 
 { #category : #accessing }
-GtFileBrowserTreeFolderRowElement >> fileBrowserTreeNode: aBrTreeNode [
+GtFileBrowserTreeDirectoryRowElement >> fileBrowserTreeNode: aBrTreeNode [
 	self fileBrowserFolderViewModel: aBrTreeNode value
 ]
 
 { #category : #initialization }
-GtFileBrowserTreeFolderRowElement >> initialize [
+GtFileBrowserTreeDirectoryRowElement >> initialize [
 	super initialize.
 	
 	self addAptitude: BrGlamorousListItemAptitude.
@@ -46,7 +46,7 @@ GtFileBrowserTreeFolderRowElement >> initialize [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserTreeFolderRowElement >> onFileBrowserFolderViewModelChanged [
+GtFileBrowserTreeDirectoryRowElement >> onFileBrowserFolderViewModelChanged [
 	"Is sent when a new fileBrowserFolderViewModel is assigned to the receiver.
 	Note: #onFileBrowserFolderViewModelChanged is sent before #subscribeToFileBrowserFolderViewModel
 	which means that if you perform any operation that triggers an announcement it will be ignored because the receiver
@@ -58,7 +58,7 @@ GtFileBrowserTreeFolderRowElement >> onFileBrowserFolderViewModelChanged [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserTreeFolderRowElement >> subscribeToFileBrowserFolderViewModel [
+GtFileBrowserTreeDirectoryRowElement >> subscribeToFileBrowserFolderViewModel [
 	"Is sent after a new fileBrowserFolderViewModel is assigned to the receiver.
 	It is required to unsubscribe from the previously subscribed objects by implementing
 	#unsubscribeFromFileBrowserFolderViewModel if the receiver subscribes to them"
@@ -74,7 +74,7 @@ GtFileBrowserTreeFolderRowElement >> subscribeToFileBrowserFolderViewModel [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserTreeFolderRowElement >> unsubscribeFromFileBrowserFolderViewModel [
+GtFileBrowserTreeDirectoryRowElement >> unsubscribeFromFileBrowserFolderViewModel [
 	"Is sent before a new fileBrowserFolderViewModel is assigned to the receiver.
 	Objects that subscribe to fileBrowserFolderViewModel are required to implement this method."
 	<modelUnsubscriber: #folder>
@@ -84,7 +84,7 @@ GtFileBrowserTreeFolderRowElement >> unsubscribeFromFileBrowserFolderViewModel [
 ]
 
 { #category : #'private - update' }
-GtFileBrowserTreeFolderRowElement >> updateFolderSelection [
+GtFileBrowserTreeDirectoryRowElement >> updateFolderSelection [
 	
 	self fileBrowserFolderViewModel isOnlySelectedFolder
 		ifTrue: [ self states addState: BlElementState selected ]

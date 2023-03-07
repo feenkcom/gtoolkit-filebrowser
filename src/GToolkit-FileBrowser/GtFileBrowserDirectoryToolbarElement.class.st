@@ -1,5 +1,5 @@
 Class {
-	#name : #GtFileBrowserFolderToolbarElement,
+	#name : #GtFileBrowserDirectoryToolbarElement,
 	#superclass : #BrHorizontalPane,
 	#traits : 'TGtWithFileBrowserFolderViewModel',
 	#classTraits : 'TGtWithFileBrowserFolderViewModel classTrait',
@@ -12,10 +12,10 @@ Class {
 }
 
 { #category : #initialization }
-GtFileBrowserFolderToolbarElement >> initialize [
+GtFileBrowserDirectoryToolbarElement >> initialize [
 	super initialize.
 	
-	breadcrumb := GtFileBrowserFolderBreadcrumbElement new.
+	breadcrumb := GtFileBrowserDirectoryBreadcrumbElement new.
 	breadcrumb fitContent.
 	
 	self addChild: (BrScrollPane new
@@ -55,7 +55,7 @@ GtFileBrowserFolderToolbarElement >> initialize [
 ]
 
 { #category : #'api - file browser folder view model' }
-GtFileBrowserFolderToolbarElement >> onFileBrowserFolderViewModelChanged [
+GtFileBrowserDirectoryToolbarElement >> onFileBrowserFolderViewModelChanged [
 	"Is sent when a new fileBrowserFolderViewModel is assigned to the receiver.
 	Note: #onFileBrowserFolderViewModelChanged is sent before #subscribeToFileBrowserFolderViewModel
 	which means that if you perform any operation that triggers an announcement it will be ignored because the receiver
