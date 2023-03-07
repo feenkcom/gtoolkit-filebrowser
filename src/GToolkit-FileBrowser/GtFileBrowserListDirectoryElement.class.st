@@ -1,5 +1,5 @@
 "
-I represent a file in a content list of a folder {{gtClass:GtFileBrowserFolderElement}}
+I represent a file in a content list of a folder {{gtClass:GtFileBrowserDirectoryElement}}
 
 
 "
