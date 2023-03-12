@@ -25,7 +25,7 @@ GtFileBrowserSpotterStart >> gtSpotterForDirectoriesFor: aSearch [
 		items: [ self fileBrowserFolderModelBlock value fileBrowserFoldersModel
 				fileBrowserFolderModels ];
 		title: 'Directories';
-		candidatesLimit: Float infinity;
+		itemsLimit: Float infinity;
 		itemName: [ :eachFolderModel | eachFolderModel fileReference basename ];
 		filterBySubstring
 ]
@@ -38,7 +38,7 @@ GtFileBrowserSpotterStart >> gtSpotterForFilesFor: aSearch [
 		items: [ self fileBrowserFolderModelBlock value fileBrowserFilesModel
 				fileBrowserFileModels ];
 		title: 'Files';
-		candidatesLimit: Float infinity;
+		itemsLimit: Float infinity;
 		itemName: [ :eachFileModel | eachFileModel fileReference basename ];
 		filterBySubstring
 ]
