@@ -37,7 +37,7 @@ GtFileBrowserDirectoryToolbarElement >> initialize [
 
 	spotterButton := GtSpotterDropdownButtonStencil new
 		object: (GtFileBrowserSpotterStart new fileBrowserFolderModelBlock: [ self fileBrowserFolderViewModel fileBrowserFolderModel ]);
-		tooltip: 'Search Files and Folder';
+		tooltip: 'Search files and directories';
 		objectActOn: [ :anActOnEvent :aFileBrowserFolderOrFileModel :theButton | 
 			aFileBrowserFolderOrFileModel isFileBrowserFolderModel
 				ifTrue: [

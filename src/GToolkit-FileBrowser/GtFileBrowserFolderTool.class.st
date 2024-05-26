@@ -46,3 +46,14 @@ GtFileBrowserFolderTool >> asElementDo: aOneArgBlock [
 	
 	^ aOneArgBlock cull: aFolderElement cull: self
 ]
+
+{ #category : #accessing }
+GtFileBrowserFolderTool >> icon [
+	<return: #BlElement>
+	^ BrGlamorousVectorIcons folder
+]
+
+{ #category : #accessing }
+GtFileBrowserFolderTool >> tabLook [
+	^ BrGlamorousTabSwitcherWithIconAptitude
+]
