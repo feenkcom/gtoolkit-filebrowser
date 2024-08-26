@@ -133,12 +133,14 @@ GtFileBrowserFoldersModel >> findFileBrowserFolderModel: aFolder [
 GtFileBrowserFoldersModel >> findFileBrowserFolderModel: aFolder ifFound: aFoundBlock ifNone: aNoneBlock [
 	"Find a child object based on the child model and evaluate aFoundBlock if such child was found,
 	aNoneBlock otherwise."
+
 	<return: #Object>
 	<generatedFrom: #'TGtRobocoderMetamodelChildrenForManyWithModelTemplate>>#findObjectIfFoundIfNoneTemplate'>
-
 	^ self fileBrowserFolderModels
-		detect: [ :eachFileBrowserFolderModel |
-			eachFileBrowserFolderModel fileReference = aFolder ]
+		detect: [ :eachFileBrowserFolderModel | 
+			aFolder fileSystem isCaseSensitive
+				ifTrue: [ eachFileBrowserFolderModel fileReference = aFolder ]
+				ifFalse: [ eachFileBrowserFolderModel fileReference pathString sameAs: aFolder pathString ] ]
 		ifFound: aFoundBlock
 		ifNone: aNoneBlock
 ]
