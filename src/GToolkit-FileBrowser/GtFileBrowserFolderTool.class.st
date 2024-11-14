@@ -19,7 +19,7 @@ GtFileBrowserFolderTool class >> forFolder: aStringOrFileReference [
 	aRootFolderModel := GtFileBrowserFolderModel new fileReference: aRootFolder.
 	aFolderModel := aRootFolderModel.
 
-	aFolderFileReference absolutePath withParents allButFirstDo: [ :eachPath |
+	aFolderFileReference asAbsolute withParents allButFirstDo: [ :eachPath |
 		aFolderModel := aFolderModel fileBrowserFoldersModel findFileBrowserFolderModel: eachPath asFileReference.
 		aFolderModel ifNil: [ self error: 'Not able to read the path to the given folder' ] ].
 
