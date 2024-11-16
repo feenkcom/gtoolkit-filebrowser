@@ -1,7 +1,7 @@
 {
 	"repositories" : {
-		"github://feenkcom/gtoolkit-spotter/src" : "v0.8.1400",
-		"github://feenkcom/gtoolkit-phlow/src" : "v0.8.1464",
-		"github://feenkcom/gtoolkit-inspector/src" : "v0.8.2427"
+		"github://feenkcom/gtoolkit-spotter/src" : "v0.8.1401",
+		"github://feenkcom/gtoolkit-phlow/src" : "v0.8.1465",
+		"github://feenkcom/gtoolkit-inspector/src" : "v0.8.2428"
 	}
 }
