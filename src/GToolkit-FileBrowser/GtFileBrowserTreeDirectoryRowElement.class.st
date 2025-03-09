@@ -28,9 +28,8 @@ GtFileBrowserTreeDirectoryRowElement >> initialize [
 	self vFitContent.
 	
 	self addAptitude:
-		(BrGlamorousWithContextMenuAptitude
-			content: [ BrGlamorousSimpleContextMenuContent new
-				items: {('Delete' -> [ :anEvent | self fileBrowserFolderViewModel fileBrowserFolderModel deleteFolder ])} ]).
+		(BrGlamorousWithExplicitContextMenuAptitude
+			items: [ {('Delete' -> [ self fileBrowserFolderViewModel fileBrowserFolderModel deleteFolder ])} ]).
 
 	self
 		when: BlClickEvent
