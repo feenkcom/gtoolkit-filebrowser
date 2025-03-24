@@ -14,39 +14,41 @@ Class {
 { #category : #initialization }
 GtFileBrowserDirectoryToolbarElement >> initialize [
 	super initialize.
-	
+
 	breadcrumb := GtFileBrowserDirectoryBreadcrumbElement new.
 	breadcrumb fitContent.
-	
-	self addChild: (BrScrollPane new
-		aptitude: BrScrollPaneAptitude;
-		hMatchParent;
-		vFitContent;
-		content: breadcrumb).
+
+	self
+		addChild: (BrScrollPane new
+				aptitude: BrScrollPaneAptitude;
+				hMatchParent;
+				vFitContent;
+				content: breadcrumb).
 
 	self cellSpacing: 5.
 
 	addButton := BrButton new
-		aptitude: BrGlamorousButtonWithIconAptitude + BrGlamorousButtonWithLabelTooltipAptitude;
-		label: 'Create a new folder';
-		beSmallSize;
-		icon: BrGlamorousVectorIcons add;
-		action: [
-			self hasFileBrowserFolderViewModel
-				ifTrue: [ self fileBrowserFolderViewModel fileBrowserFolderModel addNewFolder ] ].
+			aptitude: BrGlamorousButtonWithIconAptitude + BrGlamorousButtonWithLabelTooltipAptitude2;
+			label: 'Create a new folder';
+			beSmallSize;
+			icon: BrGlamorousVectorIcons add;
+			action: [ self hasFileBrowserFolderViewModel
+					ifTrue: [ self fileBrowserFolderViewModel fileBrowserFolderModel addNewFolder ] ].
 
 	spotterButton := GtSpotterDropdownButtonStencil new
-		object: (GtFileBrowserSpotterStart new fileBrowserFolderModelBlock: [ self fileBrowserFolderViewModel fileBrowserFolderModel ]);
-		tooltip: 'Search files and directories';
-		objectActOn: [ :anActOnEvent :aFileBrowserFolderOrFileModel :theButton | 
-			aFileBrowserFolderOrFileModel isFileBrowserFolderModel
-				ifTrue: [
-					self phlow spawnTool: (GtPhlowCompositeTool new
-						addTool: (GtFileBrowserFolderTool forFolderModel: aFileBrowserFolderOrFileModel);
-						addTool: (GtInspectorTool forObject: aFileBrowserFolderOrFileModel fileReference)) ]
-				ifFalse: [ self phlow spawnTool: (GtInspectorTool forObject: aFileBrowserFolderOrFileModel fileReference) ].
-			anActOnEvent actedUpon: true ];
-		asElement.
+			object: (GtFileBrowserSpotterStart new
+					fileBrowserFolderModelBlock: [ self fileBrowserFolderViewModel fileBrowserFolderModel ]);
+			tooltip: 'Search files and directories';
+			objectActOn: [ :anActOnEvent :aFileBrowserFolderOrFileModel :theButton | 
+				aFileBrowserFolderOrFileModel isFileBrowserFolderModel
+					ifTrue: [ self phlow
+							spawnTool: (GtPhlowCompositeTool new
+									addTool: (GtFileBrowserFolderTool forFolderModel: aFileBrowserFolderOrFileModel);
+									addTool: (GtInspectorTool forObject: aFileBrowserFolderOrFileModel fileReference)) ]
+					ifFalse: [ self phlow
+							spawnTool: (GtInspectorTool forObject: aFileBrowserFolderOrFileModel fileReference) ].
+				anActOnEvent actedUpon: true ];
+			asElement.
 
 	spotterButton beSmallSize.
 
