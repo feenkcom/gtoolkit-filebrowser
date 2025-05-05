@@ -7,13 +7,13 @@ Class {
 { #category : #examples }
 GtFileBrowserFolderModelExamples >> addFolder [
 	<gtExample>
+	<return: #GtFileBrowserFolderModel>
 	| folderModel aNewFolderModel folderAddedAnnouncement |
-
 	folderModel := self currentFolder.
 	folderModel fileBrowserFoldersModel
 		when: GtFileBrowserFolderModelAddedAnnouncement
 		do: [ :anAnnouncement | folderAddedAnnouncement := anAnnouncement ].
-	
+
 	aNewFolderModel := folderModel addNewFolder.
 	self assert: folderAddedAnnouncement notNil.
 
@@ -23,6 +23,6 @@ GtFileBrowserFolderModelExamples >> addFolder [
 { #category : #examples }
 GtFileBrowserFolderModelExamples >> currentFolder [
 	<gtExample>
-	
+	<return: #GtFileBrowserFolderModel>
 	^ GtFileBrowserFolderModel new fileReference: '.' asFileReference
 ]
