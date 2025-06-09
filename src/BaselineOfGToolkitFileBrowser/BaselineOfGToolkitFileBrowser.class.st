@@ -10,13 +10,13 @@ BaselineOfGToolkitFileBrowser >> baseline: spec [
 	spec for: #'common' do: [
 		spec
 			baseline: 'GToolkitInspector' with: [
-				spec repository: 'github://feenkcom/gtoolkit-inspector:v0.8.2782/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-inspector:v0.8.2783/src' ].
 		spec
 			baseline: 'GToolkitPhlow' with: [
-				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1713/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-phlow:v0.8.1714/src' ].
 		spec
 			baseline: 'GToolkitSpotter' with: [
-				spec repository: 'github://feenkcom/gtoolkit-spotter:v0.8.1636/src' ].
+				spec repository: 'github://feenkcom/gtoolkit-spotter:v0.8.1637/src' ].
 
 		spec package: 'GToolkit-FileBrowser' with: [
 			spec requires: #(#GToolkitInspector #GToolkitPhlow #GToolkitSpotter) ].
