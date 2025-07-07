@@ -381,6 +381,13 @@ GtFileBrowserFoldersModel >> when: anAnnouncementClass do: aBlock [
 ]
 
 { #category : #'api - announcer' }
+GtFileBrowserFoldersModel >> when: anAnnouncementClass do: aBlock for: aSubscriber [
+	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenDoTemplate'>
+	(announcer ifNil: [ announcer := Announcer new ])
+		when: anAnnouncementClass do: aBlock for: aSubscriber
+]
+
+{ #category : #'api - announcer' }
 GtFileBrowserFoldersModel >> when: anAnnouncementClass send: aSelector to: anObject [
 	<generatedFrom: #'TGtRobocoderAnnouncerTemplate>>#whenSendToTemplate'>
 	(announcer ifNil: [ announcer := Announcer new ]) weak

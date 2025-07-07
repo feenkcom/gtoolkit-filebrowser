@@ -12,7 +12,8 @@ GtFileBrowserFolderModelExamples >> addFolder [
 	folderModel := self currentFolder.
 	folderModel fileBrowserFoldersModel
 		when: GtFileBrowserFolderModelAddedAnnouncement
-		do: [ :anAnnouncement | folderAddedAnnouncement := anAnnouncement ].
+		do: [ :anAnnouncement | folderAddedAnnouncement := anAnnouncement ]
+		for: self.
 
 	aNewFolderModel := folderModel addNewFolder.
 	self assert: folderAddedAnnouncement notNil.
