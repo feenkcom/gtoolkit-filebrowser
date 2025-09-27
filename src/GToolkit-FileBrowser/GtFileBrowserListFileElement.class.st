@@ -12,7 +12,7 @@ Class {
 
 { #category : #'private - instance creation' }
 GtFileBrowserListFileElement >> createIcon [
-	^ BrGlamorousIcons file asElement
+	^ BrGlamorousVectorIcons file asElement
 ]
 
 { #category : #'private - instance creation' }
