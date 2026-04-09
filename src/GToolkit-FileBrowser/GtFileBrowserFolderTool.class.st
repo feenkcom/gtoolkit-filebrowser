@@ -15,7 +15,7 @@ GtFileBrowserFolderTool class >> forFolder: aStringOrFileReference [
 		assert: [ aFolderFileReference isDirectory ]
 		description: [ 'Folder tool can only be creater for a folder' ].
 	
-	aRootFolder := Path root asFileReference.
+	aRootFolder := aFolderFileReference withPath: '/'.
 	aRootFolderModel := GtFileBrowserFolderModel new fileReference: aRootFolder.
 	aFolderModel := aRootFolderModel.
 
