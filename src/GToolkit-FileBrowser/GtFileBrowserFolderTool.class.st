@@ -15,13 +15,13 @@ GtFileBrowserFolderTool class >> forFolder: aStringOrFileReference [
 		assert: [ aFolderFileReference isDirectory ]
 		description: [ 'Folder tool can only be creater for a folder' ].
 	
-	aRootFolder := aFolderFileReference withPath: '/'.
+	aRootFolder := aFolderFileReference withPath: Path root.
 	aRootFolderModel := GtFileBrowserFolderModel new fileReference: aRootFolder.
 	aFolderModel := aRootFolderModel.
 
 	aFolderFileReference asAbsolute withParents allButFirstDo: [ :eachPath |
 		aFolderModel := aFolderModel fileBrowserFoldersModel findFileBrowserFolderModel: eachPath asFileReference.
-		aFolderModel ifNil: [ self error: 'Not able to read the path to path: ', eachPath printString, ' for model: ', aFolderModel printString, ' folder parents: ', aFolderFileReference asAbsolute withParents storeString ] ].
+		aFolderModel ifNil: [ self error: 'Not able to read the path to path: ''', eachPath printString, ''' root folder: ''', aRootFolder printString, '''' ] ].
 
 	^ self forFolderModel: aFolderModel
 ]
